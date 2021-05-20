@@ -28,9 +28,15 @@ def run_CA_xgboost_fit(pol_excl=[], num_trials=100):
     policy_cols = ['order_closure', 'order_shome', 'order_masks', 'order_lab', 'order_quarres',
                    'order_quarvis', 'order_bubble']
     for pc in policy_cols:
+        unique_count = 0
+        for i in range(len(df['del_' + pc].values)):
+            if df['del_' + pc].values[i] != 0:
+                if np.count_nonzero([df['del_' + pc2].values[i] != 0 for pc2 in policy_cols]) == 1:
+                    unique_count += 1
         print(pc, np.count_nonzero(df['del_' + pc].values != 0),
               np.count_nonzero(df['del_' + pc].values > 0),
-              np.count_nonzero(df['del_' + pc].values < 0))
+              np.count_nonzero(df['del_' + pc].values < 0),
+              unique_count)
 
     counties = df['county'].values
     unique_counties = sorted(df['county'].unique())
@@ -71,5 +77,6 @@ def run_CA_xgboost_fit(pol_excl=[], num_trials=100):
 
 
 if __name__ == '__main__':
+    gen_data_files.build_unified_CA_df()
     gen_data_files.build_CA_training_df(include_all_policies=True)
     run_CA_xgboost_fit()

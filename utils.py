@@ -59,7 +59,7 @@ def fill_demo_vars(df, file_path, var_names, col_names, fips_col_name='FIPS', en
     if type(col_names) is str:
         col_names = [col_names]
     new_df = pd.read_csv(file_path, encoding=encoding)
-    print('Loading data from', file_path)
+    # print('Loading data from', file_path)
 
     for var_name in var_names:
         # first create empty column to fill in

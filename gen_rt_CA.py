@@ -26,7 +26,7 @@ def run_rt_gen():
     covan_df = utils.get_covactnow_data()
     covan_df['date'] = pd.to_datetime(covan_df['date'], format="%Y-%m-%d")
 
-    df = utils.get_COVID_df(os.path.join('raw_data_files', 'nyt_us_counties.csv'))
+    df = utils.get_COVID_df()
     df = df.loc[df['state'] == 'California']
     counties = df['county'].unique()
     print(counties)
@@ -79,7 +79,7 @@ def run_rt_gen():
         for xx, yy in zip(x, y):
             all_data.append([county, '%s' % xx, '%.4f' % yy])
 
-        with open(os.path.join('data_files', 'all_CA_rt_data.csv'), 'w') as f:
+        with open(os.path.join('data_files', 'all_CA_rt_data_new.csv'), 'w') as f:
             for row in all_data:
                 f.write(','.join(row) + '\n')
 
